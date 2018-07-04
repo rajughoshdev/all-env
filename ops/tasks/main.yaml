@@ -1,0 +1,43 @@
+---
+- name: Installing necessary ops packages
+  apt: update_cache=yes state=latest name={{ item }}
+  with_items:
+    - jq 
+    - curl
+    - python-pip
+
+- name: Installing python packages
+  pip: 
+    name: "{{ item }}"
+  with_items:
+    - awscli 
+
+- name: Installing terraform 
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip 
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Add Docker GPG key
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+
+- name: Install list of packages
+  apt:
+    name: "{{ item }}"
+    state: installed
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+    - docker-ce
+
+- name: Install docker compser  
+  shell: curl -L https://github.com/docker/compose/releases/download/{{ docker_composer_version }}/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+
+- name: Docker compser permission 
+  file: dest=/usr/local/bin/docker-compose  mode=a+x

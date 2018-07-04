@@ -1,0 +1,3 @@
+terraform_version: 0.11.7 
+docker_composer_version: 1.21.2 
+ansible_distribution_release: gpg
