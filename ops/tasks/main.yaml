@@ -5,6 +5,8 @@
     - jq 
     - curl
     - python-pip
+    - redis-tools
+    - rubygems 
 
 - name: Installing python packages
   pip: 
@@ -15,6 +17,12 @@
 - name: Installing terraform 
   unarchive:
     src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip 
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Installing vagrant 
+  unarchive:
+    src: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_linux_amd64.zip
     dest: /usr/local/bin
     remote_src: yes
 

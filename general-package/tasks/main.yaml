@@ -18,3 +18,6 @@
   apt: 
    deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-{{slack_version}}-amd64.deb
 
+- name: Install google Chorme  
+  apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb 
